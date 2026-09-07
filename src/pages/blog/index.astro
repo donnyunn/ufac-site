@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import PostList from '../../components/PostList.astro';
+import { t } from '../../i18n';
+
+const s = t('ko');
+---
+
+<BaseLayout lang="ko" title={`${s.blog_title} | UFAC`} description={s.blog_description}>
+  <section class="section">
+    <div class="container narrow">
+      <h1 class="page-title">{s.blog_title}</h1>
+      <p class="page-description">{s.blog_description}</p>
+      <PostList lang="ko" />
+    </div>
+  </section>
+</BaseLayout>

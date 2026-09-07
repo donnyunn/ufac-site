@@ -1,0 +1,35 @@
+---
+import { getCollection } from 'astro:content';
+import { t, prefix, formatDate, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const s = t(lang);
+const p = prefix(lang);
+
+const posts = (await getCollection('blog', ({ id, data }) => id.startsWith(`${lang}/`) && !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+
+{posts.length === 0 ? (
+  <p class="empty">{s.blog_empty}</p>
+) : (
+  <ul class="post-list">
+    {posts.map((post) => {
+      const slug = post.id.slice(lang.length + 1);
+      return (
+        <li class="post-item">
+          <h2><a href={`${p}/blog/${slug}/`}>{post.data.title}</a></h2>
+          <p>{post.data.description}</p>
+          <div class="post-meta">
+            <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate, lang)}</time>
+            {post.data.tags.map((tag) => <span class="tag">{tag}</span>)}
+          </div>
+        </li>
+      );
+    })}
+  </ul>
+)}
