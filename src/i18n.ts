@@ -3,7 +3,6 @@ export type Lang = 'ko' | 'en';
 export const ui = {
   ko: {
     nav_about: '소개',
-    nav_focus: '주력 분야',
     nav_blog: '블로그',
     nav_contact: '연락처',
     switch_label: 'EN',
@@ -17,7 +16,6 @@ export const ui = {
   },
   en: {
     nav_about: 'About',
-    nav_focus: 'Focus',
     nav_blog: 'Blog',
     nav_contact: 'Contact',
     switch_label: 'KO',

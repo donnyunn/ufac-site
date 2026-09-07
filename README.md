@@ -44,3 +44,5 @@ draft: false
 ```
 
 영어 글은 `src/content/blog/en/`에 같은 파일 이름으로 둡니다. `master`에 push하면 1~2분 뒤 https://ufac.dev 에 반영됩니다.
+
+이미지·영상 첨부 방법과 예시 글 형식은 [docs/blog-guide.ko.md](docs/blog-guide.ko.md)를 참고하세요. 새 글을 쓸 때 이 파일을 복사해서 시작하면 됩니다.

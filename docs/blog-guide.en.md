@@ -22,7 +22,7 @@ Add `draft: true` to keep a post out of the build until it is ready.
 
 Keep images near the Markdown file and reference them with a relative path. They are optimized automatically at build time.
 
-![UFAC mark](../images/ufac-mark.png)
+![UFAC mark](../src/content/blog/images/ufac-mark.png)
 
 ```markdown
 ![UFAC mark](../images/ufac-mark.png)

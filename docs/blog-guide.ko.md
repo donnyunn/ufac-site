@@ -22,7 +22,7 @@ Uniquefacturing(UFAC)의 기술 블로그를 시작합니다. 영상인식 기�
 
 이미지는 md 파일 근처에 두고 상대 경로로 참조합니다. 빌드 때 자동으로 최적화됩니다.
 
-![UFAC 마크](../images/ufac-mark.png)
+![UFAC 마크](../src/content/blog/images/ufac-mark.png)
 
 ```markdown
 ![UFAC 마크](../images/ufac-mark.png)
