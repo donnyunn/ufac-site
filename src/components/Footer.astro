@@ -1,9 +1,26 @@
 ---
+import { email, home } from '../data/home';
+import type { Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = home[lang].sections;
 const year = new Date().getFullYear();
 ---
 
-<footer class="site-footer">
-  <div class="container">
-    <p>&copy; {year} Uniquefacturing. All rights reserved.</p>
+<footer id="contact" class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <img class="footer-mark" src="/images/logo/svg/mark-white.svg" alt="" width="28" height="28" />
+      <p class="footer-copy">&copy; {year} Uniquefacturing</p>
+    </div>
+    <div class="footer-contact">
+      <p class="footer-label">{c.contact}</p>
+      <a class="footer-email" href={`mailto:${email}`}>{email}</a>
+      <p class="footer-line">{c.contactLine}</p>
+    </div>
   </div>
 </footer>

@@ -1,0 +1,74 @@
+---
+import PostList from './PostList.astro';
+import { home } from '../data/home';
+import { prefix, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+}
+
+const { lang } = Astro.props;
+const c = home[lang];
+const p = prefix(lang);
+---
+
+<section class="hero">
+  <div class="container">
+    <img class="hero-mark" src="/images/logo/svg/mark-color.svg" alt="" width="96" height="96" />
+    <p class="eyebrow">Uniquefacturing</p>
+    <h1>{c.tagline}</h1>
+    <p class="lead">{c.intro}</p>
+  </div>
+</section>
+
+<section id="tech" class="section">
+  <div class="container">
+    <h2 class="section-title">{c.sections.tech}</h2>
+    <div class="tiles">
+      {c.capabilities.map((cap) => (
+        <article class="tile">
+          <h3>{cap.title}</h3>
+          <p>{cap.blurb}</p>
+          <ul class="keywords">
+            {cap.keywords.map((k) => <li>{k}</li>)}
+          </ul>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section id="work" class="section section-alt">
+  <div class="container">
+    <h2 class="section-title">{c.sections.work}</h2>
+    <div class="projects">
+      {c.projects.map((pr) => {
+        const Tag = pr.href ? 'a' : 'div';
+        return (
+          <article class="project">
+            <Tag class="project-media" href={pr.href}>
+              <img src={pr.image} alt={pr.imageAlt} width="800" height="600" loading="lazy" />
+            </Tag>
+            <div class="project-body">
+              <h3>{pr.href ? <a href={pr.href}>{pr.title}</a> : pr.title}</h3>
+              <p>{pr.blurb}</p>
+              <div class="post-meta">
+                {pr.tags.map((tag) => <span class="tag">{tag}</span>)}
+              </div>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<section id="notes" class="section">
+  <div class="container narrow">
+    <div class="section-head">
+      <h2 class="section-title">{c.sections.notes}</h2>
+      <a class="more-link" href={`${p}/blog/`}>{c.sections.notesMore} →</a>
+    </div>
+    <PostList lang={lang} limit={3} heading="h3" />
+  </div>
+</section>

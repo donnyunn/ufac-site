@@ -1,33 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import Home from '../components/Home.astro';
+// 홈 화면 문구와 목록은 src/data/home.ts 에서 수정합니다.
 ---
 
 <BaseLayout
   lang="ko"
-  title="Uniquefacturing | UFAC"
-  description="Uniquefacturing (UFAC) — 기술력을 높이는 연구개발 파트너. Prototype Studio."
+  title="Uniquefacturing | 기술 공방"
+  description="Uniquefacturing (UFAC) — 구상을 실물로 만드는 기술 공방. 하드웨어·펌웨어, 임베디드 소프트웨어, 영상인식, 무선통신."
 >
-  <section class="hero">
-    <div class="container">
-      <img class="hero-mark" src="/images/LOGO.png" alt="" width="320" height="320" />
-      <p class="eyebrow">Uniquefacturing</p>
-      <h1>기술력을 높이는 연구개발 파트너</h1>
-      <p class="lead">Prototype Studio</p>
-      <a href="#contact" class="btn">프로젝트 문의</a>
-    </div>
-  </section>
-
-  <section id="about" class="section">
-    <div class="container narrow">
-      <h2>소개</h2>
-      <p>Uniquefacturing은 구상을 실물로 만드는 일을 합니다. 기획부터 완성까지 책임지고 함께합니다.</p>
-    </div>
-  </section>
-
-  <section id="contact" class="section section-alt">
-    <div class="container narrow">
-      <h2>연락처</h2>
-      <p class="contact-email"><a href="mailto:uni@ufac.dev">uni@ufac.dev</a></p>
-    </div>
-  </section>
+  <Home lang="ko" />
 </BaseLayout>

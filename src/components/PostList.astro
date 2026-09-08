@@ -4,14 +4,20 @@ import { t, prefix, formatDate, type Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
+  /** 최신 글 N개만 보여줄 때 */
+  limit?: number;
+  /** 글 제목의 heading 단계. 목록 페이지는 h2, 홈의 섹션 안에서는 h3 */
+  heading?: 'h2' | 'h3';
 }
 
-const { lang } = Astro.props;
+const { lang, limit, heading = 'h2' } = Astro.props;
+const Heading = heading;
 const s = t(lang);
 const p = prefix(lang);
 
-const posts = (await getCollection('blog', ({ id, data }) => id.startsWith(`${lang}/`) && !data.draft))
+let posts = (await getCollection('blog', ({ id, data }) => id.startsWith(`${lang}/`) && !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+if (limit) posts = posts.slice(0, limit);
 ---
 
 {posts.length === 0 ? (
@@ -22,7 +28,7 @@ const posts = (await getCollection('blog', ({ id, data }) => id.startsWith(`${la
       const slug = post.id.slice(lang.length + 1);
       return (
         <li class="post-item">
-          <h2><a href={`${p}/blog/${slug}/`}>{post.data.title}</a></h2>
+          <Heading><a href={`${p}/blog/${slug}/`}>{post.data.title}</a></Heading>
           <p>{post.data.description}</p>
           <div class="post-meta">
             <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate, lang)}</time>
