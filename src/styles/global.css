@@ -749,6 +749,19 @@ a.project-media:hover img {
   color: rgba(255, 255, 255, 0.6);
 }
 
+/* ---------- Tablet ---------- */
+@media (max-width: 1000px) {
+  /* 방식: 4열 → 2열. 화살표는 왼쪽 카드에서만 의미가 있으므로 숨김 */
+  .steps {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .steps li + li::before {
+    display: none;
+  }
+}
+
 /* ---------- Mobile ---------- */
 @media (max-width: 720px) {
   .nav-toggle {
@@ -812,6 +825,29 @@ a.project-media:hover img {
   .beat-bg-duo .beat-bg-img:last-child {
     -webkit-mask-image: linear-gradient(0deg, #000 70%, transparent 100%);
     mask-image: linear-gradient(0deg, #000 70%, transparent 100%);
+  }
+
+  /* 하는 일: 3열 → 2열 */
+  .work-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .work-grid li {
+    padding: 1.5rem 1rem;
+  }
+
+  /* 방식: 4열 → 1열, 화살표는 아래 방향 */
+  .steps {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .steps li + li::before {
+    content: "↓";
+    display: block;
+    left: 50%;
+    top: -0.75rem;
+    transform: translate(-50%, -50%);
   }
 
   .footer-grid {
