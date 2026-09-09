@@ -19,8 +19,8 @@ const switchHref = altPath(Astro.url.pathname, other);
     </a>
     <button class="nav-toggle" aria-label={s.menu_open} aria-expanded="false">☰</button>
     <nav class="site-nav">
-      <a href={`${p}/#tech`}>{s.nav_tech}</a>
       <a href={`${p}/#work`}>{s.nav_work}</a>
+      <a href={`${p}/#method`}>{s.nav_method}</a>
       <a href={`${p}/blog/`}>{s.nav_notes}</a>
       <a href={`${p}/#contact`}>{s.nav_contact}</a>
       <a href={switchHref} class="lang-switch" lang={other} hreflang={other}>{s.switch_label}</a>

@@ -2,8 +2,8 @@ export type Lang = 'ko' | 'en';
 
 export const ui = {
   ko: {
-    nav_tech: '기술',
-    nav_work: '작업',
+    nav_work: '하는 일',
+    nav_method: '방식',
     nav_notes: '노트',
     nav_contact: '연락',
     switch_label: 'EN',
@@ -16,8 +16,8 @@ export const ui = {
     home_label: 'Uniquefacturing 홈',
   },
   en: {
-    nav_tech: 'Tech',
-    nav_work: 'Work',
+    nav_work: 'What we do',
+    nav_method: 'How we work',
     nav_notes: 'Notes',
     nav_contact: 'Contact',
     switch_label: 'KO',

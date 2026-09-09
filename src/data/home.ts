@@ -1,16 +1,18 @@
 import type { Lang } from '../i18n';
 
 /**
- * 홈 화면의 모든 문구와 목록은 이 파일에서 관리합니다.
+ * 홈 화면의 모든 문구는 이 파일에서 관리합니다.
  * 한국어는 ko, 영어는 en 블록을 고치면 됩니다.
+ *
+ * 홈은 위에서 아래로 읽는 6개의 단락(beat)으로 구성됩니다.
+ *   hero → problem → work → method → edge → cta
  */
 
 export const email = 'uni@u-fac.kr';
 
-export interface Capability {
-  title: string;
-  blurb: string;
-  keywords: string[];
+export interface Item {
+  name: string;
+  note: string;
 }
 
 export interface Project {
@@ -25,54 +27,71 @@ export interface Project {
 }
 
 export interface HomeContent {
-  tagline: string;
-  intro: string;
-  sections: {
-    tech: string;
-    work: string;
-    notes: string;
-    notesMore: string;
-    contact: string;
-    contactLine: string;
-  };
-  capabilities: Capability[];
+  /** 1. 첫 문구 */
+  hero: { eyebrow: string; lines: string[] };
+  /** 2. 문제 제기 */
+  problem: { lines: string[] };
+  /** 3. 우리가 하는 일 */
+  work: { title: string; items: Item[] };
+  /** 4. 우리의 방식. note는 단계 아래 한 줄 */
+  method: { title: string; steps: Item[]; note: string };
+  /** 5. 차별점 */
+  edge: { title: string; lines: string[] };
+  /** 6. 마지막 CTA */
+  cta: { title: string; lines: string[]; button: string };
+  /** 푸터 */
+  footer: { contact: string; contactLine: string };
+  /** 제작품 섹션. 사진이 준비되면 showProjects를 true로 */
+  showProjects: boolean;
+  projectsTitle: string;
   projects: Project[];
 }
 
 export const home: Record<Lang, HomeContent> = {
   ko: {
-    tagline: '기술 공방',
-    intro: 'Uniquefacturing은 구상을 실물로 만드는 일을 합니다. 기획부터 완성까지 책임지고 함께합니다.',
-    sections: {
-      tech: '다루는 기술',
-      work: '제작품들',
-      notes: '노트',
-      notesMore: '모든 노트',
+    hero: {
+      eyebrow: 'Uniquefacturing · 기술 공방',
+      lines: ['작은 기술 공방이지만,', '그래도 어려운 건 다 만들어냅니다.'],
+    },
+    problem: {
+      lines: ['만들어야 하는 것은 있는데', '어디서부터 시작해야 할지 모르겠다면.'],
+    },
+    work: {
+      title: '우리가 하는 일',
+      items: [
+        { name: 'Hardware', note: '회로 설계와 보드 제작' },
+        { name: 'Software', note: '펌웨어부터 응용 소프트웨어까지' },
+        { name: 'Wireless', note: 'BLE, Mesh, Thread 등의 무선 연결' },
+        { name: 'Network', note: '여러 장치를 하나로 묶는 통신 구조 설계' },
+        { name: 'Solution', note: '현장에 맞춘 알고리즘 구성' },
+        { name: 'Prototype', note: '직접 확인 가능한 동작 시제품' },
+      ],
+    },
+    method: {
+      title: '우리의 방식',
+      steps: [
+        { name: '고민합니다', note: '무엇이 진짜 문제인지부터' },
+        { name: '만들어봅니다', note: '작게, 그리고 빠르게' },
+        { name: '테스트합니다', note: '실제 현장 조건에서' },
+        { name: '개선합니다', note: '될 때까지' },
+      ],
+      note: '구상부터 제작, 설치와 현장 테스트까지 직접 합니다.',
+    },
+    edge: {
+      title: '차별점',
+      lines: ['작은 팀이라 빠르고,', '직접 만들기 때문에 깊게 이해합니다.'],
+    },
+    cta: {
+      title: '만들고 싶은 것이 있으신가요?',
+      lines: ['아직 아이디어 단계여도 괜찮습니다.', '같이 만들어볼 수 있는 방법부터 찾아드리겠습니다.'],
+      button: '메일로 이야기 시작하기',
+    },
+    footer: {
       contact: '연락',
       contactLine: '기술에 관한 이야기는 언제든 환영합니다.',
     },
-    capabilities: [
-      {
-        title: '하드웨어 · 펌웨어',
-        blurb: '센서, 전원, 통신 하드웨어를 설계하고 MCU 펌웨어를 직접 작성합니다.',
-        keywords: ['PCB', 'MCU', 'Firmware'],
-      },
-      {
-        title: '임베디드 소프트웨어',
-        blurb: '장치 위에서 돌아가는 시스템 소프트웨어와 제어 로직을 개발합니다.',
-        keywords: ['Embedded Linux', 'C/C++', 'Python'],
-      },
-      {
-        title: '영상인식',
-        blurb: '카메라 영상에서 물체와 상태를 인식하는 모델을 현장 환경에 맞춰 구축합니다.',
-        keywords: ['Computer Vision', 'Edge AI', '재고인식'],
-      },
-      {
-        title: '무선통신',
-        blurb: '다수의 장치를 안정적으로 묶어 제어하는 무선 네트워크를 설계합니다.',
-        keywords: ['BLE', 'Mesh', '조명제어'],
-      },
-    ],
+    showProjects: false,
+    projectsTitle: '제작품들',
     projects: [
       {
         title: '영상 인식 솔루션',
@@ -98,38 +117,49 @@ export const home: Record<Lang, HomeContent> = {
     ],
   },
   en: {
-    tagline: 'Engineering Workshop',
-    intro: 'Uniquefacturing turns concepts into real things. We take responsibility from planning through completion, working alongside you.',
-    sections: {
-      tech: 'What we work with',
-      work: 'Builds',
-      notes: 'Notes',
-      notesMore: 'All notes',
+    hero: {
+      eyebrow: 'Uniquefacturing · Engineering Workshop',
+      lines: ['A small engineering workshop,', 'but the hard things still get built here.'],
+    },
+    problem: {
+      lines: ['You know what needs to be built,', 'but not where to start.'],
+    },
+    work: {
+      title: 'What we do',
+      items: [
+        { name: 'Hardware', note: 'Circuit design and board bring-up' },
+        { name: 'Software', note: 'From firmware to application software' },
+        { name: 'Wireless', note: 'BLE, Mesh, Thread, and other radio links' },
+        { name: 'Network', note: 'Designing the communication structure that ties devices together' },
+        { name: 'Solution', note: 'Algorithms tailored to the actual site' },
+        { name: 'Prototype', note: 'Working prototypes you can verify yourself' },
+      ],
+    },
+    method: {
+      title: 'How we work',
+      steps: [
+        { name: 'Think', note: 'Start from the real problem' },
+        { name: 'Build', note: 'Small and fast' },
+        { name: 'Test', note: 'Under field conditions' },
+        { name: 'Refine', note: 'Until it works' },
+      ],
+      note: 'From concept to build, installation, and field testing, all done in-house.',
+    },
+    edge: {
+      title: 'What makes us different',
+      lines: ['A small team, so we move fast.', 'We build it ourselves, so we understand it deeply.'],
+    },
+    cta: {
+      title: 'Have something you want to build?',
+      lines: ['An idea is enough to start.', 'We will begin by finding a way to build it together.'],
+      button: 'Start with an email',
+    },
+    footer: {
       contact: 'Contact',
       contactLine: 'Conversations about technology are always welcome.',
     },
-    capabilities: [
-      {
-        title: 'Hardware & firmware',
-        blurb: 'Sensor, power, and communication hardware, with MCU firmware written in-house.',
-        keywords: ['PCB', 'MCU', 'Firmware'],
-      },
-      {
-        title: 'Embedded software',
-        blurb: 'System software and control logic that runs on the device itself.',
-        keywords: ['Embedded Linux', 'C/C++', 'Python'],
-      },
-      {
-        title: 'Computer vision',
-        blurb: 'Models that recognize objects and states from camera footage, tuned to the site.',
-        keywords: ['Computer Vision', 'Edge AI', 'Inventory'],
-      },
-      {
-        title: 'Wireless',
-        blurb: 'Wireless networks that tie many devices together reliably for control.',
-        keywords: ['BLE', 'Mesh', 'Lighting'],
-      },
-    ],
+    showProjects: false,
+    projectsTitle: 'Builds',
     projects: [
       {
         title: 'Vision recognition solution',

@@ -1,7 +1,11 @@
 ---
-import PostList from './PostList.astro';
-import { home } from '../data/home';
-import { prefix, type Lang } from '../i18n';
+import { Image } from 'astro:assets';
+import workshop from '../assets/workshop_1.png';
+import concept from '../assets/working_0-crop.png';
+import building from '../assets/working_1-band.png';
+import field from '../assets/working_2.png';
+import { home, email } from '../data/home';
+import type { Lang } from '../i18n';
 
 interface Props {
   lang: Lang;
@@ -9,66 +13,148 @@ interface Props {
 
 const { lang } = Astro.props;
 const c = home[lang];
-const p = prefix(lang);
 ---
 
-<section class="hero">
-  <div class="container">
-    <img class="hero-mark" src="/images/logo/svg/mark-color.svg" alt="" width="96" height="96" />
-    <p class="eyebrow">Uniquefacturing</p>
-    <h1>{c.tagline}</h1>
-    <p class="lead">{c.intro}</p>
-  </div>
-</section>
-
-<section id="tech" class="section">
-  <div class="container">
-    <h2 class="section-title">{c.sections.tech}</h2>
-    <div class="tiles">
-      {c.capabilities.map((cap) => (
-        <article class="tile">
-          <h3>{cap.title}</h3>
-          <p>{cap.blurb}</p>
-          <ul class="keywords">
-            {cap.keywords.map((k) => <li>{k}</li>)}
-          </ul>
-        </article>
+<!-- 1. 첫 문구: 작업실 사진 위에 반투명 레이어, 그 위에 문구 -->
+<section class="beat beat-hero">
+  <Image
+    class="hero-bg"
+    src={workshop}
+    alt=""
+    widths={[768, 1280, 1920]}
+    sizes="100vw"
+    loading="eager"
+    fetchpriority="high"
+    decoding="async"
+  />
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="container narrow hero-content">
+    <img class="hero-mark" src="/images/logo/svg/mark-color.svg" alt="" width="72" height="72" />
+    <p class="eyebrow">{c.hero.eyebrow}</p>
+    <h1 class="beat-text">
+      {c.hero.lines.map((line, i) => (
+        <>
+          {i > 0 && <br />}
+          <span>{line}</span>
+        </>
       ))}
-    </div>
+    </h1>
   </div>
 </section>
 
-<section id="work" class="section section-alt">
-  <div class="container">
-    <h2 class="section-title">{c.sections.work}</h2>
-    <div class="projects">
-      {c.projects.map((pr) => {
-        const Tag = pr.href ? 'a' : 'div';
-        return (
-          <article class="project">
-            <Tag class="project-media" href={pr.href}>
-              <img src={pr.image} alt={pr.imageAlt} width="800" height="600" loading="lazy" />
-            </Tag>
-            <div class="project-body">
-              <h3>{pr.href ? <a href={pr.href}>{pr.title}</a> : pr.title}</h3>
-              <p>{pr.blurb}</p>
-              <div class="post-meta">
-                {pr.tags.map((tag) => <span class="tag">{tag}</span>)}
-              </div>
-            </div>
-          </article>
-        );
-      })}
-    </div>
-  </div>
-</section>
-
-<section id="notes" class="section">
+<!-- 2. 문제 제기 -->
+<section class="beat beat-problem">
   <div class="container narrow">
-    <div class="section-head">
-      <h2 class="section-title">{c.sections.notes}</h2>
-      <a class="more-link" href={`${p}/blog/`}>{c.sections.notesMore} →</a>
+    <span class="beat-num">01</span>
+    <p class="beat-text beat-text-muted">
+      {c.problem.lines.map((line, i) => (
+        <>
+          {i > 0 && <br />}
+          <span>{line}</span>
+        </>
+      ))}
+    </p>
+  </div>
+</section>
+
+<!-- 3. 우리가 하는 일: 배경은 구상 단계 (스케치) -->
+<section id="work" class="beat beat-photo">
+  <div class="beat-bg" aria-hidden="true">
+    <Image class="beat-bg-img" src={concept} alt="" widths={[768, 1280, 1920]} sizes="100vw" loading="lazy" decoding="async" />
+  </div>
+  <div class="container beat-fg">
+    <span class="beat-num">02</span>
+    <h2 class="beat-title">{c.work.title}</h2>
+    <ul class="work-grid">
+      {c.work.items.map((item) => (
+        <li>
+          <strong>{item.name}</strong>
+          <span>{item.note}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- 4. 우리의 방식: 배경은 제작 → 현장 (두 장 나란히) -->
+<section id="method" class="beat beat-photo">
+  <div class="beat-bg beat-bg-duo" aria-hidden="true">
+    <Image class="beat-bg-img" src={building} alt="" widths={[768, 1280]} sizes="50vw" loading="lazy" decoding="async" />
+    <Image class="beat-bg-img" src={field} alt="" widths={[768, 1280]} sizes="50vw" loading="lazy" decoding="async" />
+  </div>
+  <div class="container beat-fg">
+    <span class="beat-num">03</span>
+    <h2 class="beat-title">{c.method.title}</h2>
+    <ol class="steps">
+      {c.method.steps.map((step, i) => (
+        <li>
+          <span class="step-index">{i + 1}</span>
+          <strong>{step.name}</strong>
+          <span class="step-note">{step.note}</span>
+        </li>
+      ))}
+    </ol>
+    <p class="method-note">{c.method.note}</p>
+  </div>
+</section>
+
+<!-- 5. 차별점 -->
+<section class="beat">
+  <div class="container narrow">
+    <span class="beat-num">04</span>
+    <h2 class="beat-title">{c.edge.title}</h2>
+    <p class="beat-text">
+      {c.edge.lines.map((line, i) => (
+        <>
+          {i > 0 && <br />}
+          <span>{line}</span>
+        </>
+      ))}
+    </p>
+  </div>
+</section>
+
+<!-- 제작품 (사진 준비 후 showProjects: true) -->
+{c.showProjects && (
+  <section id="projects" class="beat beat-alt">
+    <div class="container">
+      <h2 class="beat-title">{c.projectsTitle}</h2>
+      <div class="projects">
+        {c.projects.map((pr) => {
+          const Tag = pr.href ? 'a' : 'div';
+          return (
+            <article class="project">
+              <Tag class="project-media" href={pr.href}>
+                <img src={pr.image} alt={pr.imageAlt} width="800" height="600" loading="lazy" />
+              </Tag>
+              <div class="project-body">
+                <h3>{pr.href ? <a href={pr.href}>{pr.title}</a> : pr.title}</h3>
+                <p>{pr.blurb}</p>
+                <div class="post-meta">
+                  {pr.tags.map((tag) => <span class="tag">{tag}</span>)}
+                </div>
+              </div>
+            </article>
+          );
+        })}
+      </div>
     </div>
-    <PostList lang={lang} limit={3} heading="h3" />
+  </section>
+)}
+
+<!-- 6. 마지막 CTA -->
+<section id="contact" class="beat beat-cta">
+  <div class="container narrow">
+    <h2 class="cta-title">{c.cta.title}</h2>
+    <p class="cta-lines">
+      {c.cta.lines.map((line, i) => (
+        <>
+          {i > 0 && <br />}
+          <span>{line}</span>
+        </>
+      ))}
+    </p>
+    <a class="btn" href={`mailto:${email}`}>{c.cta.button}</a>
+    <p class="cta-email">{email}</p>
   </div>
 </section>
